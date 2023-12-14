@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TreinoPI.Contracts.Repository;
+using TreinoPI.Repository;
 
 namespace TreinoPI.Controllers
 {
@@ -8,6 +9,11 @@ namespace TreinoPI.Controllers
     public class ModeloContratacaoController : ControllerBase
     {
         private readonly IModeloContratacaoRepository _ModeloContratacaoRepository;
+
+        public ModeloContratacaoController(IModeloContratacaoRepository modeloContratacaoRepository)
+        {
+            _ModeloContratacaoRepository = modeloContratacaoRepository;
+        }
 
         [HttpGet]
         public async Task<IActionResult> Get()

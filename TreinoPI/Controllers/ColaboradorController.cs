@@ -21,7 +21,13 @@ namespace TreinoPI.Controllers
         {
             return Ok(await _colaboradorRepository.Get());
         }
-        
+
+        [HttpGet("{email}")]
+        public async Task<IActionResult> GetByEmail(string email)
+        {
+            return Ok(await _colaboradorRepository.GetByEmail(email));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add(ColaboradorDTO colaborador)
         {
