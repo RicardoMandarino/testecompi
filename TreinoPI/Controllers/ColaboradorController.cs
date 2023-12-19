@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TreinoPI.Contracts.Repository;
 using TreinoPI.DTO;
 using TreinoPI.Entity;
@@ -28,6 +29,7 @@ namespace TreinoPI.Controllers
             return Ok(await _colaboradorRepository.GetByEmail(email));
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Add(ColaboradorDTO colaborador)
         {
@@ -35,6 +37,7 @@ namespace TreinoPI.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Update(ColaboradorDTO colaborador)
         {
@@ -42,11 +45,28 @@ namespace TreinoPI.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete]
         public async Task<IActionResult> Delete(string email)
         {
             await _colaboradorRepository.Delete(email);
             return Ok();
+        }
+
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> LogIn(UserLoginDTO user)
+        {
+            try
+            {
+                return Ok(await _colaboradorRepository.LogIn(user));
+            }
+            
+            catch(Exception ex)
+            {
+               return Unauthorized("Usuario ou Senha Invalida");
+            }
         }
     }
 }

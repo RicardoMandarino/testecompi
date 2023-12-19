@@ -1,6 +1,6 @@
 ﻿namespace TreinoPI.DTO
 {
-    public class LoginDTO
+    public class UserLoginDTO
     {
         public string Email { get; set; }
         public string Senha { get; set; }

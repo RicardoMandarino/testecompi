@@ -9,6 +9,8 @@ namespace TreinoPI.Contracts.Repository
         Task Update(ColaboradorDTO colaborador);
         Task Delete(string email);
         Task<IEnumerable<ColaboradorEntity>> Get();
-        Task<LoginDTO> GetByEmail(string email);
+        Task<UserLoginDTO> GetByEmail(string email);
+
+        Task<UserTokenDTO> LogIn(UserLoginDTO user);
     }
 }

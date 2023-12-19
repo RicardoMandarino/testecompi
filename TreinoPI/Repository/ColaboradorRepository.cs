@@ -29,12 +29,23 @@ namespace TreinoPI.Repository
             return await GetConnection().QueryAsync<ColaboradorEntity>(sql);
         }
 
-        public async Task<LoginDTO> GetByEmail(string email)
+        public async Task<UserLoginDTO> GetByEmail(string email)
         {
             string sql = "SELECT EMAIL,SENHA FROM COLABORADOR WHERE Email = @email";
-            return await GetConnection().QueryFirstAsync<LoginDTO>(sql, new { email });
+            return await GetConnection().QueryFirstAsync<UserLoginDTO>(sql, new { email });
         }
 
+        public async Task<UserTokenDTO> LogIn(UserLoginDTO user)
+        {
+            string sql = "SELECT * FROM colaborador WHERE Email = @Email AND Senha = @Senha";
+            ColaboradorEntity userLogin = await GetConnection().QueryFirstAsync<ColaboradorEntity>(sql, user);
+            return new UserTokenDTO
+            {
+                Token = Authentication.GenerateToken(userLogin)
+            };
+                     
+            
+        }
 
         public async Task Update(ColaboradorDTO colaborador)
         {
