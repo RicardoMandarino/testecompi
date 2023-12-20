@@ -11,8 +11,8 @@ namespace TreinoPI.Repository
         public async Task Add(ColaboradorDTO colaborador)
         {
             string sql = @"
-                INSERT INTO COLABORADOR (Nome, Email, Contato, Endereco, Cargo, Empresa, ModeloContratacaoId, Senha)
-                            VALUE (@Nome, @Email, @Contato, @Endereco, @Cargo, @Empresa, @ModeloContratacaoId, @Senha)            
+                INSERT INTO COLABORADOR (Nome, Email, Contato, Endereco, Cargo, Empresa, ModeloContratacaoId, Senha, Roles)
+                            VALUE (@Nome, @Email, @Contato, @Endereco, @Cargo, @Empresa, @ModeloContratacaoId, @Senha, @Roles)            
             ";
             await Execute(sql,colaborador);
         }
@@ -41,7 +41,8 @@ namespace TreinoPI.Repository
             ColaboradorEntity userLogin = await GetConnection().QueryFirstAsync<ColaboradorEntity>(sql, user);
             return new UserTokenDTO
             {
-                Token = Authentication.GenerateToken(userLogin)
+                Token = Authentication.GenerateToken(userLogin),
+                User = userLogin
             };
                      
             
@@ -59,6 +60,7 @@ namespace TreinoPI.Repository
                         Empresa = @Empresa,
                         ModeloContratacaoId = @ModeloContratacaoId,
                         Senha = @Senha
+                        Roles = @Roles
                 WHERE Email = @Email
            ";
             await Execute(sql, colaborador);

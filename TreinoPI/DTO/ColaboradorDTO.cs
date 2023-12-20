@@ -10,5 +10,6 @@
         public string Empresa { get; set; }
         public int ModeloContratacaoId { get; set; }
         public string Senha { get; set; }
+        public string Roles { get; set; }
     }
 }

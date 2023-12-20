@@ -16,7 +16,7 @@ namespace TreinoPI.Controllers
         {
             _colaboradorRepository = colaboradorRepository;
         }
-
+        [Authorize(Roles = "default")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -29,7 +29,7 @@ namespace TreinoPI.Controllers
             return Ok(await _colaboradorRepository.GetByEmail(email));
         }
 
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Add(ColaboradorDTO colaborador)
         {
@@ -37,7 +37,7 @@ namespace TreinoPI.Controllers
             return Ok();
         }
 
-        [Authorize]
+        
         [HttpPut]
         public async Task<IActionResult> Update(ColaboradorDTO colaborador)
         {
@@ -45,7 +45,7 @@ namespace TreinoPI.Controllers
             return Ok();
         }
 
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpDelete]
         public async Task<IActionResult> Delete(string email)
         {
